@@ -95,8 +95,8 @@ Thus, we finish the cleaning taking only the columns mentioned earlier: result, 
 
 The final thing that was tried in our exploratory analysis was the idea of "buckets." That is, the idea that you can group together a continuous variable in order to make it a bit more interpretable. Specifically, it was chosen to make 5 buckets for the gold difference column: very negative, negative, neutral, positive, and very positive. The bucket ranges were chosen arbitrarily here, but they were chosen based off of what many would consider to be how possible the game would be to win in these specific game states. very negative being almost impossible to win, with between 10,000 gold behind to 5,000 gold behind. Then negative being hard, but possible to win, from 5,000 gold behind to 1,000 gold behind. Neutral, being essentially even between 1,000 gold behind to 1,000 gold ahead. And then positive and very positive are mirrored with the negative and very negative buckets. Then, the result, csdiffat25, and xpdiffat25 columns are all averaged to see what's going on.
 
- golddiffat25_binned   |    result |   csdiffat25 |   xpdiffat25 |
-|:----------------------|----------:|-------------:|-------------:|
+|   golddiffat25_binned |    result |   csdiffat25 |   xpdiffat25 |
+|----------------------:|----------:|-------------:|-------------:|
 | Very Negative         | 0.0517241 |     -52.7069 |    -7415.12  |
 | Negative              | 0.178571  |     -32.2381 |    -3422.32  |
 | Neutral               | 0.476923  |      -3.4    |     -244.692 |
