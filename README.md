@@ -10,11 +10,13 @@ League of Legends, also known as LoL, is a very popular multiplayer game release
 
 When playing League of Legends, many times you hear people wanting to give up part-way through the game, the common phrase "ff15" simply stands for "forfiet 15," or more simply, forfeit at the 15 minute mark in the game. According to League of Graphs, when someone is better at the game, they tend to forfiet the game earlier and more often. At the time of creating this, the average forfiet time for challenger, which is the highest rank in league, is at 25 minutes and 38 seconds. As someone who doesn't like to surrender the game, as every game is theoretically possible to win, this is quite frustrating. 
 
-Thus, the focus of this project is the idea of how decided is the game at 25 minutes. Using data analysis techniques and metrics found at the 25-minute mark of every professional game from the LCS and LEC regions, the aim here is to see how predictable the outcome of a game is at the 25-minute mark. To do this, we will be focusing on the column "result" and the columnsthat end with "diffat25," including xpdiffat25, csdiffat25, and golddiffat25. golddiffat25 is gold difference at 25 minutes, and this represents how far ahead or behind a team is in terms of gold, the main resource to buy more stats in the game. Simiilarly, xpdiffat25 and csdiffat25 represent experience difference at 25 minutes and cs difference at 25 minutes respectively. Experience being what you use to level up for an upgrade in your champion's strength, and cs being one of the many sources of gold in the game. Lastly, result is simply the result of the game, marked with a 1 for a win or 0 for a loss.
+Thus, the focus of this project is the idea of how decided is the game at 25 minutes. Using data analysis techniques and metrics found at the 25-minute mark of every professional game from the LCS and LEC regions, the aim here is to see how predictable the outcome of a game is at the 25-minute mark. Now, one question that could be asked is if a dataset of professional game could be generalized to the average person's game. Not necessarily, but what what a professional data set does have is that it is guaranteed to be played all the way through to the end without any forfeiting. 
+
+In order to predict the outcome of a game at the 25-minute mark, we will be focusing on the column "result" and the columns that end with "diffat25," including xpdiffat25, csdiffat25, and golddiffat25. golddiffat25 is gold difference at 25 minutes, and this represents how far ahead or behind a team is in terms of gold, the main resource to buy more stats in the game. Simiilarly, xpdiffat25 and csdiffat25 represent experience difference at 25 minutes and cs difference at 25 minutes respectively. Experience being what you use to level up for an upgrade in your champion's strength, and cs being one of the many sources of gold in the game. Lastly, result is simply the result of the game, marked with a 1 for a win or 0 for a loss.
 
 # Data Cleaning and Exploratory Analysis  
 
-To clean the data, many steps are taken. First, only the rows with the 'league' column corresponding to LCS and LEC are taken. After this, only the blue side data was included. The reasoning behind this is that when taking both blue and red data, you can see that their statistics are essentially mirrored within the same game, thus this just ends up being duplicate data with very high collinearity.
+To clean the data, many steps are taken. First, only the rows with the 'league' column corresponding to LCS and LEC are taken. After this, only the blue side data was included. The reasoning behind this is that when taking both blue and red data, you can see that their statistics are essentially mirrored within the same game, thus this just ends up being duplicate data with very high collinearity. Also, since we're focusing specifically on games that last at least 25-minutes, all games that are shorter than 25-minutes are removed. 
 
 The first question that felt like it needed to be answered was simply which side wins more? Red or blue, and thus the following figure was created.
 <iframe
@@ -105,4 +107,44 @@ The final thing that was tried in our exploratory analysis was the idea of "buck
 
 Overall, the results are as expected, you can see that as you get a better gold diff, all the other variables increase as well.
 
+# Framing a Prediction Problem
+
+Looking at all of this, the idea of predicting results of the game using the statistical differences at 25 minutes still seems plausible. Thus, this becomes a binary classification problem with result as the response variable and csdiffat25, xpdiffat25, and golddiffat25 as our predictors. The data was then split into 2 groups, training data and testing data with 75% and 25% of the data respectively, in order to evaluate our model. Due to our data being relatively balanced in terms of winning and losing, along with being balanced as well with red and blue side, it was chosen to use accuracy in order to evaluate the models created for our prediction. Although we have reported F1-score as well.
+
+# Baseline Model
+
+For the baseline model, Logistic Regression was chosen due to this being a relatively simple binary classification problem with golddiffat25, csdiffat25, and xpdiffat25 as the predictors, and result as the response. All three predictors are quantitative, and at this stage, no preprocessing for the pipeline occurred.
+With this relatively simple Logistic Regression, we get an FI-score of 0.8319 an accuracy of 0.8225. This is a very good classification rate, due to you have to remember that when playing a game like League of Legends, there is always the human error. Human error can cause many variable things to occur during an individual game, thus this accuracy is relatively good.
+
+# Final Model
+
+First, since we have run our logistic regression, it was decided to look at a few more relationships, these are in the following figures:
+<iframe
+  src="assets/g_diff_dist.html"
+  width="900"
+  height="700"
+  frameborder="0"
+></iframe>
+<iframe
+  src="assets/xp_diff_dist.html"
+  width="900"
+  height="700"
+  frameborder="0"
+></iframe>
+<iframe
+  src="assets/cs_diff_dist.html"
+  width="900"
+  height="700"
+  frameborder="0"
+></iframe>
+
+From these we can see that the first two look good, since we're running a logistic regression and they have a relatively sigmoid shape, which is intended. But the csdiffdist does not look quite as good. This implies that this specific relationship isn't necessarily linear. So, one of the steps that were included in the final model is that csdiffat25 was used as a polynomial. Now, after multiple tests attempting multiple different things including random forest, K-nearest neighbors, and gradient boosting, and all of these using GridSearchCV for their hyperparamaters. Random forest was attmepted because this was a relatively simple classification problem, and since we had a relationship that wasn't necessarily linear, random forest could be appropriate. K-Nearest neighbors was attempted due to this being a simple classification problem, and K-nearest neighbors traditionally does well on those types of problems. Gradient boosting was attempted due to this being in general a highly accurate deep-learning technique in machine-learning, and it can help wit non-linearity. But one model did better than all of these: Logistic regression with some preprocessing.
+
+The preprocessing included the earlier mentioned polynomial on csdiffat25, along with a standard scaler. Now even though standerd scaler does not help in terms of actual accuracy, it helps with keeping all of the predictors on the same scale. For example when thinking about experience and gold, those are 2 very different numerical metrics, so to put them on a similar scale could be useful in terms of interpreting the magnitude of the variables now that they're on similar scales. In the end this model had an accuracy of 0.8403 and a fi-score of 0.8613. Now compared to the base-model, which had an accuaracy of 0.8225 and a fi-score of 0.8319, there wasn't a huge improvement in terms of accuracy. 
+
+But, with this final model, it is possible to say that possibly those people that are putting up surrender votes have a point, maybe the game is decided by 25 minutes most of the time, and this could even possible be proven by the over 80& success rate in predicting the results of the game. But, 80% isn't 100%, and thus a League of Legends game isn't necessarily decided at 25.
+
+Describe your model and state the features in your model, including how many are quantitative, ordinal, and nominal, and how you performed any necessary encodings. Report the performance of your model and whether or not you believe your current model is “good” and why.
+
+Tip: Make sure to hit all of the points above: many Portfolio Homeworks in the past have lost points for not doing so.
 
