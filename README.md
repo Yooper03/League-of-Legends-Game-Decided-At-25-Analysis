@@ -18,7 +18,7 @@ To clean the data, many steps are taken. First, only the rows with the 'league' 
 
 The first question that felt like it needed to be answered was simply which side wins more? Red or blue, and thus the following figure was created.
 <iframe
-  src="assets/side-win.html"
+  src="assets/side_win.html"
   width="800"
   height="600"
   frameborder="0"
