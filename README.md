@@ -23,3 +23,60 @@ The first question that felt like it needed to be answered was simply which side
   height="600"
   frameborder="0"
 ></iframe>
+
+Looking at this, we can see that blue simply wins more often than red side. Which is interesting, because theoretically this should be an even split. But then the question came to be, why does this happen, so then a a figure was created for how often blue side simply has a gold lead, as from experience playing the game, gold is the most important resource to have in the game.
+
+<iframe
+  src="assets/blue_has_gold_lead.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Using this graph, we can see that blue has a gold lead only a little under 60% of the time. So then the question becomes how often does blue side win assuming they have a gold lead.
+<iframe
+  src="assets/win_with_gold_lead.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Already, we can see that this alone says you have roughly an 80% change to win if you're on blue side with a gold lead at 25 minutes. Of course, then the idea would be to look at another variable, experience(xp) leads at 25.
+<iframe
+  src="assets/win_with_exp_lead.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Thus we see that with an exp lead at 25 minutes, there's an even higher chance of winning! This is quite surprising, as was mentioner earlier, gold is widely considered the most important resource in the game, so seeing that a lead in exp has a higher chance of winning on blue side than gold is quite interesting. 
+
+Now with the last difference at 25 that is mentioned in the dataset, cs.
+<iframe
+  src="assets/win_with_cs_lead.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+This seems like the weakest relationship with winning so far, but it is still significant to know that there seems to be some sort of correlation between winning a game on blue side and having a cs lead.
+
+Now looking at a couple of these distribuitions:
+<iframe
+  src="assets/gold_diff_25_dist.html"
+  width="400"
+  height="300"
+  frameborder="0"
+></iframe>
+<iframe
+  src="assets/exp_diff_25_dist.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+<iframe
+  src="assets/cs_diff_25_dist.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+Seeing these distributions, we can see that they're relatively normally distributed, meaning that these are relatively well formed for any work that we need to do using them.
