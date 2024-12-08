@@ -144,7 +144,3 @@ The preprocessing included the earlier mentioned polynomial on csdiffat25, along
 
 But, with this final model, it is possible to say that possibly those people that are putting up surrender votes have a point, maybe the game is decided by 25 minutes most of the time, and this could even possible be proven by the over 80& success rate in predicting the results of the game. But, 80% isn't 100%, and thus a League of Legends game isn't necessarily decided at 25.
 
-Describe your model and state the features in your model, including how many are quantitative, ordinal, and nominal, and how you performed any necessary encodings. Report the performance of your model and whether or not you believe your current model is “good” and why.
-
-Tip: Make sure to hit all of the points above: many Portfolio Homeworks in the past have lost points for not doing so.
-
